@@ -150,5 +150,67 @@ public class QuantityMeasurementApp {
                 "1 KG + 2.20462 POUND in KG = "
                         + mixedWeight
         );
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        boolean areVolumesEqual =
+                demonstrateEquality(
+                        litre,
+                        millilitre
+                );
+
+        System.out.println(
+                "1 LITRE and 1000 MILLILITRE are equal: "
+                        + areVolumesEqual
+        );
+
+        Quantity<VolumeUnit> convertedVolume =
+                demonstrateConversion(
+                        litre,
+                        VolumeUnit.MILLILITRE
+                );
+
+        System.out.println(
+                "1 LITRE in MILLILITRE = "
+                        + convertedVolume
+        );
+
+        Quantity<VolumeUnit> totalVolume =
+                demonstrateAddition(
+                        litre,
+                        millilitre,
+                        VolumeUnit.LITRE
+                );
+
+        System.out.println(
+                "1 LITRE + 1000 MILLILITRE in LITRE = "
+                        + totalVolume
+        );
+
+        Quantity<VolumeUnit> gallon =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.GALLON
+                );
+
+        Quantity<VolumeUnit> gallonToLitre =
+                demonstrateConversion(
+                        gallon,
+                        VolumeUnit.LITRE
+                );
+
+        System.out.println(
+                "1 GALLON in LITRE = "
+                        + gallonToLitre
+        );
     }
 }
