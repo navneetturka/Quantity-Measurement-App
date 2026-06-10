@@ -66,9 +66,9 @@ package com.apps.quantitymeasurement;
 public class QuantityMeasurementApp {
 
     public static void demonstrateLengthEquality(double value1,
-                                                 Length.LengthUnit unit1,
+                                                 LengthUnit unit1,
                                                  double value2,
-                                                 Length.LengthUnit unit2
+                                                 LengthUnit unit2
     ) {
 
         Length length1 = new Length(value1, unit1);
@@ -83,9 +83,9 @@ public class QuantityMeasurementApp {
     }
     public static boolean demonstrateLengthComparison(
             double value1,
-            Length.LengthUnit unit1,
+            LengthUnit unit1,
             double value2,
-            Length.LengthUnit unit2
+            LengthUnit unit2
     ) {
 
         Length length1 =
@@ -98,8 +98,8 @@ public class QuantityMeasurementApp {
     }
     public static Length demonstrateLengthConversion(
             double value,
-            Length.LengthUnit fromUnit,
-            Length.LengthUnit toUnit
+            LengthUnit fromUnit,
+            LengthUnit toUnit
     ) {
 
         Length length =
@@ -109,7 +109,7 @@ public class QuantityMeasurementApp {
     }
     public static Length demonstrateLengthConversion(
             Length length,
-            Length.LengthUnit toUnit
+            LengthUnit toUnit
     ) {
 
         return length.convertTo(toUnit);
@@ -124,7 +124,7 @@ public class QuantityMeasurementApp {
     public static Length demonstrateLengthAddition(
             Length length1,
             Length length2,
-            Length.LengthUnit targetUnit
+            LengthUnit targetUnit
     ) {
 
         return length1.add(length2, targetUnit);
@@ -135,46 +135,46 @@ public class QuantityMeasurementApp {
 
         demonstrateLengthEquality(
                 1.0,
-                Length.LengthUnit.FEET,
+                LengthUnit.FEET,
                 12.0,
-                Length.LengthUnit.INCHES
+                LengthUnit.INCHES
         );
 
 
         demonstrateLengthEquality(
                 1.0,
-                Length.LengthUnit.YARDS,
+                LengthUnit.YARDS,
                 3.0,
-                Length.LengthUnit.FEET
+                LengthUnit.FEET
         );
         demonstrateLengthEquality(
                 1.0,
-                Length.LengthUnit.YARDS,
+                LengthUnit.YARDS,
                 36.0,
-                Length.LengthUnit.INCHES
+                LengthUnit.INCHES
         );
 
 
         demonstrateLengthEquality(
                 1.0,
-                Length.LengthUnit.CENTIMETERS,
+                LengthUnit.CENTIMETERS,
                 0.393701,
-                Length.LengthUnit.INCHES
+                LengthUnit.INCHES
         );
 
 
         demonstrateLengthEquality(
                 30.48,
-                Length.LengthUnit.CENTIMETERS,
+                LengthUnit.CENTIMETERS,
                 1.0,
-                Length.LengthUnit.FEET
+                LengthUnit.FEET
         );
         boolean comparisonResult =
                 demonstrateLengthComparison(
                         1.0,
-                        Length.LengthUnit.YARDS,
+                        LengthUnit.YARDS,
                         3.0,
-                        Length.LengthUnit.FEET
+                        LengthUnit.FEET
                 );
 
         System.out.println(
@@ -185,8 +185,8 @@ public class QuantityMeasurementApp {
         Length feetToInches =
                 demonstrateLengthConversion(
                         1.0,
-                        Length.LengthUnit.FEET,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.FEET,
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -196,8 +196,8 @@ public class QuantityMeasurementApp {
         Length yardsToFeet =
                 demonstrateLengthConversion(
                         3.0,
-                        Length.LengthUnit.YARDS,
-                        Length.LengthUnit.FEET
+                        LengthUnit.YARDS,
+                        LengthUnit.FEET
                 );
 
         System.out.println(
@@ -207,8 +207,8 @@ public class QuantityMeasurementApp {
         Length inchesToYards =
                 demonstrateLengthConversion(
                         72.0,
-                        Length.LengthUnit.INCHES,
-                        Length.LengthUnit.YARDS
+                        LengthUnit.INCHES,
+                        LengthUnit.YARDS
                 );
 
         System.out.println(
@@ -219,8 +219,8 @@ public class QuantityMeasurementApp {
         Length converted =
                 demonstrateLengthConversion(
                         1.0,
-                        Length.LengthUnit.FEET,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.FEET,
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -229,13 +229,13 @@ public class QuantityMeasurementApp {
         Length yard =
                 new Length(
                         2.0,
-                        Length.LengthUnit.YARDS
+                        LengthUnit.YARDS
                 );
 
         Length convertedYard =
                 demonstrateLengthConversion(
                         yard,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -246,11 +246,11 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 1.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 12.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         )
                 );
 
@@ -263,11 +263,11 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 1.0,
-                                Length.LengthUnit.YARDS
+                                LengthUnit.YARDS
                         ),
                         new Length(
                                 3.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         )
                 );
 
@@ -280,11 +280,11 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 36.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
                         new Length(
                                 1.0,
-                                Length.LengthUnit.YARDS
+                                LengthUnit.YARDS
                         )
                 );
 
@@ -297,11 +297,11 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 2.54,
-                                Length.LengthUnit.CENTIMETERS
+                                LengthUnit.CENTIMETERS
                         ),
                         new Length(
                                 1.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         )
                 );
 
@@ -314,11 +314,11 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 5.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 0.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         )
                 );
 
@@ -331,11 +331,11 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 5.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 -2.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         )
                 );
 
@@ -348,13 +348,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 1.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 12.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
-                        Length.LengthUnit.FEET
+                        LengthUnit.FEET
                 );
 
         System.out.println(
@@ -366,13 +366,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 1.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 12.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
-                        Length.LengthUnit.INCHES
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -384,13 +384,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 1.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 12.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
-                        Length.LengthUnit.YARDS
+                        LengthUnit.YARDS
                 );
 
         System.out.println(
@@ -402,13 +402,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 1.0,
-                                Length.LengthUnit.YARDS
+                                LengthUnit.YARDS
                         ),
                         new Length(
                                 3.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
-                        Length.LengthUnit.YARDS
+                        LengthUnit.YARDS
                 );
 
         System.out.println(
@@ -420,13 +420,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 36.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
                         new Length(
                                 1.0,
-                                Length.LengthUnit.YARDS
+                                LengthUnit.YARDS
                         ),
-                        Length.LengthUnit.FEET
+                        LengthUnit.FEET
                 );
 
         System.out.println(
@@ -438,13 +438,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 2.54,
-                                Length.LengthUnit.CENTIMETERS
+                                LengthUnit.CENTIMETERS
                         ),
                         new Length(
                                 1.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
-                        Length.LengthUnit.CENTIMETERS
+                        LengthUnit.CENTIMETERS
                 );
 
         System.out.println(
@@ -456,13 +456,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 5.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 0.0,
-                                Length.LengthUnit.INCHES
+                                LengthUnit.INCHES
                         ),
-                        Length.LengthUnit.YARDS
+                        LengthUnit.YARDS
                 );
 
         System.out.println(
@@ -474,13 +474,13 @@ public class QuantityMeasurementApp {
                 demonstrateLengthAddition(
                         new Length(
                                 5.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
                         new Length(
                                 -2.0,
-                                Length.LengthUnit.FEET
+                                LengthUnit.FEET
                         ),
-                        Length.LengthUnit.INCHES
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
