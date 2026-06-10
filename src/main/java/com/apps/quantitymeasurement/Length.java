@@ -64,13 +64,31 @@ public class Length {
         double convertedValue =
                 baseValue / targetUnit.getConversionFactor();
 
+
+
         return new Length(convertedValue, targetUnit);
     }
     public Length add(Length thatLength) {
 
+        return add(
+                thatLength,
+                this.unit
+        );
+    }
+    public Length add(
+            Length thatLength,
+            LengthUnit targetUnit
+    ) {
+
         if (thatLength == null) {
             throw new IllegalArgumentException(
                     "Length cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
             );
         }
 
@@ -92,21 +110,20 @@ public class Length {
         double thatBaseValue =
                 thatLength.convertToBaseUnit();
 
-
         double sumInBaseUnit =
                 thisBaseValue + thatBaseValue;
 
-        // Convert back to first operand unit
         double resultValue =
                 sumInBaseUnit /
-                        this.unit.getConversionFactor();
+                        targetUnit.getConversionFactor();
 
-        // Return new object
         return new Length(
                 resultValue,
-                this.unit
+                targetUnit
         );
     }
+
+
 
     @Override
     public boolean equals(Object obj) {
