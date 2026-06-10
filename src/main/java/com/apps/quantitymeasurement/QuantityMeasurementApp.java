@@ -81,6 +81,39 @@ public class QuantityMeasurementApp {
                 length1.equals(length2)
         );
     }
+    public static boolean demonstrateLengthComparison(
+            double value1,
+            Length.LengthUnit unit1,
+            double value2,
+            Length.LengthUnit unit2
+    ) {
+
+        Length length1 =
+                new Length(value1, unit1);
+
+        Length length2 =
+                new Length(value2, unit2);
+
+        return length1.equals(length2);
+    }
+    public static Length demonstrateLengthConversion(
+            double value,
+            Length.LengthUnit fromUnit,
+            Length.LengthUnit toUnit
+    ) {
+
+        Length length =
+                new Length(value, fromUnit);
+
+        return length.convertTo(toUnit);
+    }
+    public static Length demonstrateLengthConversion(
+            Length length,
+            Length.LengthUnit toUnit
+    ) {
+
+        return length.convertTo(toUnit);
+    }
 
     public static void main(String[] args) {
 
@@ -119,6 +152,79 @@ public class QuantityMeasurementApp {
                 Length.LengthUnit.CENTIMETERS,
                 1.0,
                 Length.LengthUnit.FEET
+        );
+        boolean comparisonResult =
+                demonstrateLengthComparison(
+                        1.0,
+                        Length.LengthUnit.YARDS,
+                        3.0,
+                        Length.LengthUnit.FEET
+                );
+
+        System.out.println(
+                "Comparison Result: " +
+                        comparisonResult
+        );
+
+        Length feetToInches =
+                demonstrateLengthConversion(
+                        1.0,
+                        Length.LengthUnit.FEET,
+                        Length.LengthUnit.INCHES
+                );
+
+        System.out.println(
+                "1 FEET in INCHES = " +
+                        feetToInches
+        );
+        Length yardsToFeet =
+                demonstrateLengthConversion(
+                        3.0,
+                        Length.LengthUnit.YARDS,
+                        Length.LengthUnit.FEET
+                );
+
+        System.out.println(
+                "3 YARDS in FEET = " +
+                        yardsToFeet
+        );
+        Length inchesToYards =
+                demonstrateLengthConversion(
+                        72.0,
+                        Length.LengthUnit.INCHES,
+                        Length.LengthUnit.YARDS
+                );
+
+        System.out.println(
+                "72 INCHES in YARDS = " +
+                        inchesToYards
+        );
+
+        Length converted =
+                demonstrateLengthConversion(
+                        1.0,
+                        Length.LengthUnit.FEET,
+                        Length.LengthUnit.INCHES
+                );
+
+        System.out.println(
+                "Converted Length: " + converted
+        );
+        Length yard =
+                new Length(
+                        2.0,
+                        Length.LengthUnit.YARDS
+                );
+
+        Length convertedYard =
+                demonstrateLengthConversion(
+                        yard,
+                        Length.LengthUnit.INCHES
+                );
+
+        System.out.println(
+                "2 YARDS in INCHES = " +
+                        convertedYard
         );
     }
 }

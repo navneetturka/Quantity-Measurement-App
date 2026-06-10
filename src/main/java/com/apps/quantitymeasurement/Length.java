@@ -2,8 +2,8 @@ package com.apps.quantitymeasurement;
 
 public class Length {
 
-    private double value;
-    private LengthUnit unit;
+    private final double value;
+    private final LengthUnit unit;
 
     public enum LengthUnit {
         FEET(12.0),
@@ -24,8 +24,23 @@ public class Length {
     }
 
     public Length(double value, LengthUnit unit) {
+
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
+
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Invalid value");
+        }
         this.value = value;
         this.unit = unit;
+    }
+    public double getValue() {
+        return value;
+    }
+
+    public LengthUnit getUnit() {
+        return unit;
     }
 
     private double convertToBaseUnit() {
@@ -36,6 +51,20 @@ public class Length {
                 this.convertToBaseUnit(),
                 other.convertToBaseUnit()
         ) == 0;
+    }
+    public Length convertTo(LengthUnit targetUnit) {
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        double baseValue =
+                this.convertToBaseUnit();
+
+        double convertedValue =
+                baseValue / targetUnit.getConversionFactor();
+
+        return new Length(convertedValue, targetUnit);
     }
 
     @Override
@@ -50,5 +79,10 @@ public class Length {
         Length other = (Length) obj;
 
         return this.compare(other);
+    }
+    @Override
+    public String toString() {
+
+        return value + " " + unit;
     }
 }
