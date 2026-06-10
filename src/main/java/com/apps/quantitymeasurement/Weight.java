@@ -1,71 +1,85 @@
 package com.apps.quantitymeasurement;
 
-public class Length {
-    private static final double EPSILON = 0.000001;
+public class Weight {
+    private static final double EPSILON = 0.0001;
     private final double value;
-    private final LengthUnit unit;
+    private final WeightUnit unit;
 
-    public Length(double value, LengthUnit unit) {
+    public Weight(double value, WeightUnit unit) {
 
         if (unit == null) {
-            throw new IllegalArgumentException("Unit cannot be null");
+            throw new IllegalArgumentException(
+                    "Unit cannot be null"
+            );
         }
 
         if (!Double.isFinite(value)) {
-            throw new IllegalArgumentException("Invalid value");
+            throw new IllegalArgumentException(
+                    "Invalid value"
+            );
         }
+
         this.value = value;
         this.unit = unit;
     }
+
     public double getValue() {
         return value;
     }
 
-    public LengthUnit getUnit() {
+    public WeightUnit getUnit() {
         return unit;
     }
+
     private double convertToBaseUnit() {
+
         return unit.convertToBaseUnit(value);
     }
-
-    public boolean compare(Length other) {
+    public boolean compare(Weight other) {
 
         return Math.abs(
                 this.convertToBaseUnit() -
                         other.convertToBaseUnit()
         ) < EPSILON;
     }
-    public Length convertTo(LengthUnit targetUnit) {
+    public Weight convertTo(WeightUnit targetUnit) {
 
         if (targetUnit == null) {
-            throw new IllegalArgumentException("Target unit cannot be null");
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
         }
 
         double baseValue =
                 this.convertToBaseUnit();
 
         double convertedValue =
-                targetUnit.convertFromBaseUnit(baseValue);
+                targetUnit.convertFromBaseUnit(
+                        baseValue
+                );
 
-
-
-        return new Length(convertedValue, targetUnit);
+        return new Weight(
+                convertedValue,
+                targetUnit
+        );
     }
-    public Length add(Length thatLength) {
+
+    public Weight add(Weight thatWeight) {
 
         return add(
-                thatLength,
+                thatWeight,
                 this.unit
         );
     }
-    public Length add(
-            Length thatLength,
-            LengthUnit targetUnit
+
+    public Weight add(
+            Weight thatWeight,
+            WeightUnit targetUnit
     ) {
 
-        if (thatLength == null) {
+        if (thatWeight == null) {
             throw new IllegalArgumentException(
-                    "Length cannot be null"
+                    "Weight cannot be null"
             );
         }
 
@@ -75,13 +89,13 @@ public class Length {
             );
         }
 
-        if (thatLength.unit == null) {
+        if (thatWeight.unit == null) {
             throw new IllegalArgumentException(
                     "Unit cannot be null"
             );
         }
 
-        if (!Double.isFinite(thatLength.value)) {
+        if (!Double.isFinite(thatWeight.value)) {
             throw new IllegalArgumentException(
                     "Invalid value"
             );
@@ -91,15 +105,17 @@ public class Length {
                 this.convertToBaseUnit();
 
         double thatBaseValue =
-                thatLength.convertToBaseUnit();
+                thatWeight.convertToBaseUnit();
 
         double sumInBaseUnit =
                 thisBaseValue + thatBaseValue;
 
         double resultValue =
-                targetUnit.convertFromBaseUnit(sumInBaseUnit);
+                targetUnit.convertFromBaseUnit(
+                        sumInBaseUnit
+                );
 
-        return new Length(
+        return new Weight(
                 resultValue,
                 targetUnit
         );
@@ -114,10 +130,11 @@ public class Length {
 
         if (this.getClass() != obj.getClass()) return false;
 
-        Length other = (Length) obj;
+        Weight other = (Weight) obj;
 
         return this.compare(other);
     }
+
     @Override
     public String toString() {
 

@@ -129,6 +129,79 @@ public class QuantityMeasurementApp {
 
         return length1.add(length2, targetUnit);
     }
+    public static void demonstrateWeightEquality(
+            double value1,
+            WeightUnit unit1,
+            double value2,
+            WeightUnit unit2
+    ) {
+
+        Weight weight1 =
+                new Weight(value1, unit1);
+
+        Weight weight2 =
+                new Weight(value2, unit2);
+
+        System.out.println(
+                value1 + " " + unit1 +
+                        " and " +
+                        value2 + " " + unit2 +
+                        " are equal: " +
+                        weight1.equals(weight2)
+        );
+    }
+    public static boolean demonstrateWeightComparison(
+            double value1,
+            WeightUnit unit1,
+            double value2,
+            WeightUnit unit2
+    ) {
+
+        Weight weight1 =
+                new Weight(value1, unit1);
+
+        Weight weight2 =
+                new Weight(value2, unit2);
+
+        return weight1.equals(weight2);
+    }
+
+    public static Weight demonstrateWeightConversion(
+            double value,
+            WeightUnit fromUnit,
+            WeightUnit toUnit
+    ) {
+
+        Weight weight =
+                new Weight(value, fromUnit);
+
+        return weight.convertTo(toUnit);
+    }
+
+    public static Weight demonstrateWeightConversion(
+            Weight weight,
+            WeightUnit toUnit
+    ) {
+
+        return weight.convertTo(toUnit);
+    }
+
+    public static Weight demonstrateWeightAddition(
+            Weight weight1,
+            Weight weight2
+    ) {
+
+        return weight1.add(weight2);
+    }
+
+    public static Weight demonstrateWeightAddition(
+            Weight weight1,
+            Weight weight2,
+            WeightUnit targetUnit
+    ) {
+
+        return weight1.add(weight2, targetUnit);
+    }
 
 
     public static void main(String[] args) {
@@ -486,6 +559,95 @@ public class QuantityMeasurementApp {
         System.out.println(
                 "5 FEET + (-2 FEET) in INCHES = " +
                         targetResult8
+        );
+        demonstrateWeightEquality(
+                1.0,
+                WeightUnit.KILOGRAM,
+                1000.0,
+                WeightUnit.GRAM
+        );
+
+        demonstrateWeightEquality(
+                1.0,
+                WeightUnit.POUND,
+                453.592,
+                WeightUnit.GRAM
+        );
+        Weight kgToGram =
+                demonstrateWeightConversion(
+                        1.0,
+                        WeightUnit.KILOGRAM,
+                        WeightUnit.GRAM
+                );
+
+        System.out.println(
+                "1 KG in GRAM = " +
+                        kgToGram
+        );
+
+        Weight poundToKg =
+                demonstrateWeightConversion(
+                        2.20462,
+                        WeightUnit.POUND,
+                        WeightUnit.KILOGRAM
+                );
+
+        System.out.println(
+                "2.20462 POUND in KG = " +
+                        poundToKg
+        );
+
+        Weight resultWeight1 =
+                demonstrateWeightAddition(
+                        new Weight(
+                                1.0,
+                                WeightUnit.KILOGRAM
+                        ),
+                        new Weight(
+                                1000.0,
+                                WeightUnit.GRAM
+                        )
+                );
+
+        System.out.println(
+                "1 KG + 1000 GRAM = " +
+                        resultWeight1
+        );
+
+        Weight resultWeight2 =
+                demonstrateWeightAddition(
+                        new Weight(
+                                1.0,
+                                WeightUnit.KILOGRAM
+                        ),
+                        new Weight(
+                                1000.0,
+                                WeightUnit.GRAM
+                        ),
+                        WeightUnit.GRAM
+                );
+
+        System.out.println(
+                "1 KG + 1000 GRAM in GRAM = " +
+                        resultWeight2
+        );
+
+        Weight resultWeight3 =
+                demonstrateWeightAddition(
+                        new Weight(
+                                2.0,
+                                WeightUnit.KILOGRAM
+                        ),
+                        new Weight(
+                                4.0,
+                                WeightUnit.POUND
+                        ),
+                        WeightUnit.KILOGRAM
+                );
+
+        System.out.println(
+                "2 KG + 4 POUND in KG = " +
+                        resultWeight3
         );
     }
 }
