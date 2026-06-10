@@ -113,6 +113,70 @@ public class Quantity<U extends IMeasurable> {
                 targetUnit
         );
     }
+    public Quantity<U> subtract(Quantity<U> other) {
+
+        return subtract(
+                other,
+                this.unit
+        );
+    }
+    public Quantity<U> subtract(
+            Quantity<U> other,
+            U targetUnit
+    ) {
+
+        if (other == null) {
+            throw new IllegalArgumentException(
+                    "Quantity cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+
+        double thisBaseValue =
+                this.convertToBaseUnit();
+
+        double otherBaseValue =
+                other.convertToBaseUnit();
+
+        double differenceInBaseUnit =
+                thisBaseValue - otherBaseValue;
+
+        double resultValue =
+                targetUnit.convertFromBaseUnit(
+                        differenceInBaseUnit
+                );
+
+        return new Quantity<>(
+                resultValue,
+                targetUnit
+        );
+    }
+    public double divide(Quantity<U> other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException(
+                    "Quantity cannot be null"
+            );
+        }
+
+        double otherBaseValue =
+                other.convertToBaseUnit();
+
+        if (Math.abs(otherBaseValue) < EPSILON) {
+            throw new ArithmeticException(
+                    "Cannot divide by zero"
+            );
+        }
+
+        return this.convertToBaseUnit()
+                / otherBaseValue;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

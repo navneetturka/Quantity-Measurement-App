@@ -38,6 +38,36 @@ public class QuantityMeasurementApp {
 
         return quantity1.add(quantity2, targetUnit);
     }
+    public static <U extends IMeasurable> Quantity<U>
+    demonstrateSubtraction(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2
+    ) {
+
+        return quantity1.subtract(quantity2);
+    }
+
+    public static <U extends IMeasurable> Quantity<U>
+    demonstrateSubtraction(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2,
+            U targetUnit
+    ) {
+
+        return quantity1.subtract(
+                quantity2,
+                targetUnit
+        );
+    }
+
+    public static <U extends IMeasurable> double
+    demonstrateDivision(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2
+    ) {
+
+        return quantity1.divide(quantity2);
+    }
 
     public static void main(String[] args) {
 
@@ -120,6 +150,39 @@ public class QuantityMeasurementApp {
                 "1 FEET + 12 INCHES in FEET = "
                         + totalLength
         );
+        Quantity<LengthUnit> lengthDifference =
+                demonstrateSubtraction(
+                        new Quantity<>(
+                                10.0,
+                                LengthUnit.FEET
+                        ),
+                        new Quantity<>(
+                                6.0,
+                                LengthUnit.INCHES
+                        )
+                );
+
+        System.out.println(
+                "10 FEET - 6 INCHES = "
+                        + lengthDifference
+        );
+
+        double lengthRatio =
+                demonstrateDivision(
+                        new Quantity<>(
+                                10.0,
+                                LengthUnit.FEET
+                        ),
+                        new Quantity<>(
+                                2.0,
+                                LengthUnit.FEET
+                        )
+                );
+
+        System.out.println(
+                "10 FEET / 2 FEET = "
+                        + lengthRatio
+        );
 
         Quantity<WeightUnit> totalWeight =
                 demonstrateAddition(
@@ -150,6 +213,40 @@ public class QuantityMeasurementApp {
                 "1 KG + 2.20462 POUND in KG = "
                         + mixedWeight
         );
+        Quantity<WeightUnit> weightDifference =
+                demonstrateSubtraction(
+                        new Quantity<>(
+                                10.0,
+                                WeightUnit.KILOGRAM
+                        ),
+                        new Quantity<>(
+                                5000.0,
+                                WeightUnit.GRAM
+                        )
+                );
+
+        System.out.println(
+                "10 KG - 5000 GRAM = "
+                        + weightDifference
+        );
+
+        double weightRatio =
+                demonstrateDivision(
+                        new Quantity<>(
+                                10.0,
+                                WeightUnit.KILOGRAM
+                        ),
+                        new Quantity<>(
+                                5.0,
+                                WeightUnit.KILOGRAM
+                        )
+                );
+
+        System.out.println(
+                "10 KG / 5 KG = "
+                        + weightRatio
+        );
+
         Quantity<VolumeUnit> litre =
                 new Quantity<>(
                         1.0,
@@ -212,5 +309,39 @@ public class QuantityMeasurementApp {
                 "1 GALLON in LITRE = "
                         + gallonToLitre
         );
+        Quantity<VolumeUnit> volumeDifference =
+                demonstrateSubtraction(
+                        new Quantity<>(
+                                5.0,
+                                VolumeUnit.LITRE
+                        ),
+                        new Quantity<>(
+                                500.0,
+                                VolumeUnit.MILLILITRE
+                        )
+                );
+
+        System.out.println(
+                "5 LITRE - 500 MILLILITRE = "
+                        + volumeDifference
+        );
+
+        double volumeRatio =
+                demonstrateDivision(
+                        new Quantity<>(
+                                5.0,
+                                VolumeUnit.LITRE
+                        ),
+                        new Quantity<>(
+                                10.0,
+                                VolumeUnit.LITRE
+                        )
+                );
+
+        System.out.println(
+                "5 LITRE / 10 LITRE = "
+                        + volumeRatio
+        );
+
     }
 }
