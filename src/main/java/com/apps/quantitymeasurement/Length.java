@@ -7,7 +7,10 @@ public class Length {
 
     public enum LengthUnit {
         FEET(12.0),
-        INCHES(1.0);
+        INCHES(1.0),
+        YARDS(36.0),
+        CENTIMETERS(0.393701);
+
 
         private final double conversionFactor;
 
@@ -28,7 +31,6 @@ public class Length {
     private double convertToBaseUnit() {
         return this.value * this.unit.getConversionFactor();
     }
-
     public boolean compare(Length other) {
         return Double.compare(
                 this.convertToBaseUnit(),

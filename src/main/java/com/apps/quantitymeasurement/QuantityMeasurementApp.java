@@ -65,15 +65,60 @@
 package com.apps.quantitymeasurement;
 public class QuantityMeasurementApp {
 
-    public static void demonstrateLengthEquality() {
+    public static void demonstrateLengthEquality(double value1,
+                                                 Length.LengthUnit unit1,
+                                                 double value2,
+                                                 Length.LengthUnit unit2
+    ) {
 
-        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
+        Length length1 = new Length(value1, unit1);
+        Length length2 = new Length(value2, unit2);
 
-        System.out.println("Are lengths equal: " + l1.equals(l2));
+        System.out.println(  value1 + " " + unit1 +
+                " and " +
+                value2 + " " + unit2 +
+                " are equal: " +
+                length1.equals(length2)
+        );
     }
 
     public static void main(String[] args) {
-        demonstrateLengthEquality();
+
+        demonstrateLengthEquality(
+                1.0,
+                Length.LengthUnit.FEET,
+                12.0,
+                Length.LengthUnit.INCHES
+        );
+
+
+        demonstrateLengthEquality(
+                1.0,
+                Length.LengthUnit.YARDS,
+                3.0,
+                Length.LengthUnit.FEET
+        );
+        demonstrateLengthEquality(
+                1.0,
+                Length.LengthUnit.YARDS,
+                36.0,
+                Length.LengthUnit.INCHES
+        );
+
+
+        demonstrateLengthEquality(
+                1.0,
+                Length.LengthUnit.CENTIMETERS,
+                0.393701,
+                Length.LengthUnit.INCHES
+        );
+
+
+        demonstrateLengthEquality(
+                30.48,
+                Length.LengthUnit.CENTIMETERS,
+                1.0,
+                Length.LengthUnit.FEET
+        );
     }
 }
