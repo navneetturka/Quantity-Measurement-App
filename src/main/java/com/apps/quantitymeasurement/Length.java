@@ -66,6 +66,47 @@ public class Length {
 
         return new Length(convertedValue, targetUnit);
     }
+    public Length add(Length thatLength) {
+
+        if (thatLength == null) {
+            throw new IllegalArgumentException(
+                    "Length cannot be null"
+            );
+        }
+
+        if (thatLength.unit == null) {
+            throw new IllegalArgumentException(
+                    "Unit cannot be null"
+            );
+        }
+
+        if (!Double.isFinite(thatLength.value)) {
+            throw new IllegalArgumentException(
+                    "Invalid value"
+            );
+        }
+
+        double thisBaseValue =
+                this.convertToBaseUnit();
+
+        double thatBaseValue =
+                thatLength.convertToBaseUnit();
+
+
+        double sumInBaseUnit =
+                thisBaseValue + thatBaseValue;
+
+        // Convert back to first operand unit
+        double resultValue =
+                sumInBaseUnit /
+                        this.unit.getConversionFactor();
+
+        // Return new object
+        return new Length(
+                resultValue,
+                this.unit
+        );
+    }
 
     @Override
     public boolean equals(Object obj) {
