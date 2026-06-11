@@ -3616,4 +3616,240 @@ public class QuantityMeasurementAppTest {
                 0.0001
         );
     }
+
+    @Test
+    void testUC13_NullOperandValidationConsistency() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+
+        Exception addException =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> feet.add(null)
+                );
+
+
+        Exception subtractException =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> feet.subtract(null)
+                );
+
+
+        Exception divideException =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> feet.divide(null)
+                );
+
+
+        assertEquals(
+                addException.getMessage(),
+                subtractException.getMessage()
+        );
+
+
+        assertEquals(
+                subtractException.getMessage(),
+                divideException.getMessage()
+        );
+    }
+
+
+
+    @Test
+    void testUC13_CrossCategoryValidationConsistency() {
+
+        Quantity<LengthUnit> length =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+
+        Quantity<WeightUnit> weight =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.add(
+                        (Quantity) weight
+                )
+        );
+
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.subtract(
+                        (Quantity) weight
+                )
+        );
+
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.divide(
+                        (Quantity) weight
+                )
+        );
+    }
+
+
+
+    @Test
+    void testUC13_DivisionByZeroHandledByArithmeticOperation() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+
+        Quantity<LengthUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        LengthUnit.FEET
+                );
+
+
+        assertThrows(
+                ArithmeticException.class,
+                () -> feet.divide(zero)
+        );
+    }
+
+
+
+    @Test
+    void testUC13_AdditionBehaviorUnchanged() {
+
+        Quantity<LengthUnit> result =
+                new Quantity<>(
+                        1.0,
+                        LengthUnit.FEET
+                )
+                        .add(
+                                new Quantity<>(
+                                        12.0,
+                                        LengthUnit.INCHES
+                                )
+                        );
+
+
+        assertEquals(
+                2.0,
+                result.getValue(),
+                EPSILON
+        );
+
+
+        assertEquals(
+                LengthUnit.FEET,
+                result.getUnit()
+        );
+    }
+
+
+
+    @Test
+    void testUC13_SubtractionBehaviorUnchanged() {
+
+        Quantity<LengthUnit> result =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                )
+                        .subtract(
+                                new Quantity<>(
+                                        6.0,
+                                        LengthUnit.INCHES
+                                )
+                        );
+
+
+        assertEquals(
+                9.5,
+                result.getValue(),
+                EPSILON
+        );
+    }
+
+
+
+    @Test
+    void testUC13_DivisionBehaviorUnchanged() {
+
+        double result =
+                new Quantity<>(
+                        24.0,
+                        LengthUnit.INCHES
+                )
+                        .divide(
+                                new Quantity<>(
+                                        2.0,
+                                        LengthUnit.FEET
+                                )
+                        );
+
+
+        assertEquals(
+                1.0,
+                result,
+                EPSILON
+        );
+    }
+
+
+
+    @Test
+    void testUC13_OperationsMaintainImmutability() {
+
+        Quantity<LengthUnit> original =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+
+        Quantity<LengthUnit> other =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+
+        Quantity<LengthUnit> result =
+                original.subtract(other);
+
+
+        assertEquals(
+                10.0,
+                original.getValue(),
+                EPSILON
+        );
+
+
+        assertEquals(
+                5.0,
+                other.getValue(),
+                EPSILON
+        );
+
+
+        assertEquals(
+                5.0,
+                result.getValue(),
+                EPSILON
+        );
+    }
 }

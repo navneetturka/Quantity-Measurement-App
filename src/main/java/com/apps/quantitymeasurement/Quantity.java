@@ -45,14 +45,6 @@ public class Quantity<U extends IMeasurable> {
     }
 
 
-
-    /*
-     * UC13:
-     * Centralized arithmetic operation enum.
-     *
-     * Each operation defines only its mathematical behavior.
-     * Validation and conversion are handled separately.
-     */
     private enum ArithmeticOperation {
 
 
@@ -109,17 +101,6 @@ public class Quantity<U extends IMeasurable> {
     }
 
 
-
-    /*
-     * UC13:
-     * Centralized validation method.
-     *
-     * Handles:
-     * - null operand
-     * - category mismatch
-     * - invalid numeric values
-     * - target unit validation
-     */
     private void validateArithmeticOperands(
             Quantity<U> other,
             U targetUnit,
@@ -164,24 +145,6 @@ public class Quantity<U extends IMeasurable> {
     }
 
 
-
-    /*
-     * UC13:
-     * Single place where arithmetic is executed.
-     *
-     * Flow:
-     *
-     * Quantity value
-     *        |
-     *        v
-     * Base unit conversion
-     *        |
-     *        v
-     * ArithmeticOperation
-     *        |
-     *        v
-     * Result in base unit
-     */
     private double performBaseArithmetic(
             Quantity<U> other,
             ArithmeticOperation operation
