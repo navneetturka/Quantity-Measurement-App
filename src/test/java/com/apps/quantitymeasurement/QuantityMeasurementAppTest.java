@@ -3852,4 +3852,130 @@ public class QuantityMeasurementAppTest {
                 EPSILON
         );
     }
+
+    @Test
+    void shouldCompareCelsiusAndFahrenheit() {
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(
+                        0.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> fahrenheit =
+                new Quantity<>(
+                        32.0,
+                        TemperatureUnit.FAHRENHEIT
+                );
+
+        assertEquals(
+                celsius,
+                fahrenheit
+        );
+    }
+
+    @Test
+    void shouldConvertCelsiusToFahrenheit() {
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(
+                        100.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> fahrenheit =
+                celsius.convertTo(
+                        TemperatureUnit.FAHRENHEIT
+                );
+
+        assertEquals(
+                212.0,
+                fahrenheit.getValue(),
+                EPSILON
+        );
+    }
+
+    @Test
+    void shouldConvertKelvinToCelsius() {
+
+        Quantity<TemperatureUnit> kelvin =
+                new Quantity<>(
+                        273.15,
+                        TemperatureUnit.KELVIN
+                );
+
+        Quantity<TemperatureUnit> celsius =
+                kelvin.convertTo(
+                        TemperatureUnit.CELSIUS
+                );
+
+        assertEquals(
+                0.0,
+                celsius.getValue(),
+                EPSILON
+        );
+    }
+
+    @Test
+    void shouldNotAllowTemperatureAddition() {
+
+        Quantity<TemperatureUnit> first =
+                new Quantity<>(
+                        10.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> second =
+                new Quantity<>(
+                        20.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> first.add(second)
+        );
+    }
+
+    @Test
+    void shouldNotAllowTemperatureSubtraction() {
+
+        Quantity<TemperatureUnit> first =
+                new Quantity<>(
+                        10.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> second =
+                new Quantity<>(
+                        20.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> first.subtract(second)
+        );
+    }
+
+    @Test
+    void shouldNotAllowTemperatureDivision() {
+
+        Quantity<TemperatureUnit> first =
+                new Quantity<>(
+                        10.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> second =
+                new Quantity<>(
+                        20.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> first.divide(second)
+        );
+    }
 }

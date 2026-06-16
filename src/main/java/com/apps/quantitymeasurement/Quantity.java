@@ -150,22 +150,25 @@ public class Quantity<U extends IMeasurable> {
             ArithmeticOperation operation
     ) {
 
+        unit.validateOperationSupport(
+                operation.name()
+        );
+
+        other.unit.validateOperationSupport(
+                operation.name()
+        );
 
         double thisBaseValue =
                 this.convertToBaseUnit();
 
-
         double otherBaseValue =
                 other.convertToBaseUnit();
-
 
         return operation.compute(
                 thisBaseValue,
                 otherBaseValue
         );
     }
-
-
 
     public boolean compare(
             Quantity<U> other
@@ -185,7 +188,6 @@ public class Quantity<U extends IMeasurable> {
             U targetUnit
     ) {
 
-
         if (targetUnit == null) {
 
             throw new IllegalArgumentException(
@@ -193,26 +195,41 @@ public class Quantity<U extends IMeasurable> {
             );
         }
 
+        if (unit instanceof TemperatureUnit
+                &&
+                targetUnit instanceof TemperatureUnit) {
+
+            TemperatureUnit source =
+                    (TemperatureUnit) unit;
+
+            TemperatureUnit target =
+                    (TemperatureUnit) targetUnit;
+
+            double convertedValue =
+                    source.convertTo(
+                            value,
+                            target
+                    );
+
+            return new Quantity<>(
+                    convertedValue,
+                    targetUnit
+            );
+        }
 
         double baseValue =
                 this.convertToBaseUnit();
-
 
         double convertedValue =
                 targetUnit.convertFromBaseUnit(
                         baseValue
                 );
 
-
         return new Quantity<>(
                 convertedValue,
                 targetUnit
         );
     }
-
-
-
-
     public Quantity<U> add(
             Quantity<U> other
     ) {

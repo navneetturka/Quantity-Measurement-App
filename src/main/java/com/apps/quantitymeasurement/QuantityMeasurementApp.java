@@ -343,5 +343,62 @@ public class QuantityMeasurementApp {
                         + volumeRatio
         );
 
+        System.out.println(
+                "\n=== Temperature Demo ==="
+        );
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(
+                        0.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> fahrenheit =
+                new Quantity<>(
+                        32.0,
+                        TemperatureUnit.FAHRENHEIT
+                );
+
+        System.out.println(
+                "0°C equals 32°F : "
+                        + celsius.equals(
+                        fahrenheit
+                )
+        );
+
+        Quantity<TemperatureUnit> boiling =
+                new Quantity<>(
+                        100.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> convertedTemperature =
+                boiling.convertTo(
+                        TemperatureUnit.FAHRENHEIT
+                );
+
+        System.out.println(
+                "100°C = "
+                        + convertedTemperature
+        );
+
+        try {
+
+            boiling.add(
+                    new Quantity<>(
+                            50.0,
+                            TemperatureUnit.CELSIUS
+                    )
+            );
+
+        } catch (
+                UnsupportedOperationException e
+        ) {
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
+
     }
 }
