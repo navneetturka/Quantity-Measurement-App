@@ -1,14 +1,16 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.unit;
 
-public enum LengthUnit implements IMeasurable {
-    FEET(1.0),
-    INCHES(1.0 / 12.0),
-    YARDS(3.0),
-    CENTIMETERS(1.0 / 30.48);
+public enum WeightUnit implements IMeasurable {
+
+    KILOGRAM(1.0),
+    GRAM(0.001),
+    POUND(0.453592),
+    OUNCE(0.0283495),
+    TONNE(1000.0);
 
     private final double conversionFactor;
 
-    LengthUnit(double conversionFactor) {
+    WeightUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
@@ -29,6 +31,10 @@ public enum LengthUnit implements IMeasurable {
 
     @Override
     public String getUnitName() {
-        return this.name();
+        return name();
+    }
+
+    public static WeightUnit fromUnitName(String unitName) {
+        return WeightUnit.valueOf(unitName.toUpperCase());
     }
 }

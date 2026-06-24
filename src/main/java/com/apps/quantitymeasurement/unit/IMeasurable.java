@@ -1,4 +1,4 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.unit;
 
 public interface IMeasurable {
 
@@ -10,21 +10,18 @@ public interface IMeasurable {
 
     String getUnitName();
 
+    default String getMeasurementType() {
+        return this.getClass().getSimpleName();
+    }
+
     default boolean supportsArithmetic() {
         return true;
     }
 
-    default void validateOperationSupport(
-            String operation
-    ) {
-
+    default void validateOperationSupport(String operation) {
         if (!supportsArithmetic()) {
-
             throw new UnsupportedOperationException(
-                    getUnitName()
-                            + " does not support "
-                            + operation
-                            + " operation."
+                    getUnitName() + " does not support " + operation + " operation."
             );
         }
     }
