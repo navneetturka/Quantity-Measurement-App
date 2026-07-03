@@ -1,5 +1,3 @@
--- Quantity Measurement App - Database Schema (UC16)
-
 DROP TABLE IF EXISTS quantity_measurement_history;
 DROP TABLE IF EXISTS quantity_measurement_entity;
 

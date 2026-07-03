@@ -1,28 +1,47 @@
 package com.apps.quantitymeasurement.service;
 
-import com.apps.quantitymeasurement.entity.QuantityDTO;
+import com.apps.quantitymeasurement.model.QuantityDTO;
+import com.apps.quantitymeasurement.model.QuantityMeasurementDTO;
+
+import java.util.List;
 
 public interface IQuantityMeasurementService {
 
-    boolean compare(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO);
+    QuantityMeasurementDTO compare(
+            QuantityDTO thisQuantityDTO,
+            QuantityDTO thatQuantityDTO);
 
-    QuantityDTO convert(QuantityDTO thisQuantityDTO, QuantityDTO targetUnitDTO);
+    QuantityMeasurementDTO convert(
+            QuantityDTO thisQuantityDTO,
+            QuantityDTO thatQuantityDTO);
 
-    QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO);
+    QuantityMeasurementDTO add(
+            QuantityDTO thisQuantityDTO,
+            QuantityDTO thatQuantityDTO);
 
-    QuantityDTO add(
+    QuantityMeasurementDTO add(
             QuantityDTO thisQuantityDTO,
             QuantityDTO thatQuantityDTO,
-            QuantityDTO targetUnitDTO
-    );
+            QuantityDTO targetUnitDTO);
 
-    QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO);
+    QuantityMeasurementDTO subtract(
+            QuantityDTO thisQuantityDTO,
+            QuantityDTO thatQuantityDTO);
 
-    QuantityDTO subtract(
+    QuantityMeasurementDTO subtract(
             QuantityDTO thisQuantityDTO,
             QuantityDTO thatQuantityDTO,
-            QuantityDTO targetUnitDTO
-    );
+            QuantityDTO targetUnitDTO);
 
-    double divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO);
+    QuantityMeasurementDTO divide(
+            QuantityDTO thisQuantityDTO,
+            QuantityDTO thatQuantityDTO);
+
+    List<QuantityMeasurementDTO> getOperationHistory(String operation);
+
+    List<QuantityMeasurementDTO> getMeasurementsByType(String type);
+
+    long getOperationCount(String operation);
+
+    List<QuantityMeasurementDTO> getErrorHistory();
 }

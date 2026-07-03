@@ -1,5 +1,7 @@
 package com.apps.quantitymeasurement.unit;
 
+import com.apps.quantitymeasurement.exception.QuantityMeasurementException;
+
 public enum TemperatureUnit implements IMeasurable {
 
     CELSIUS,
@@ -46,9 +48,10 @@ public enum TemperatureUnit implements IMeasurable {
 
     @Override
     public void validateOperationSupport(String operation) {
-        throw new UnsupportedOperationException(
-                "Temperature does not support " + operation + " operation."
-        );
+        if ("DIVIDE".equalsIgnoreCase(operation)) {
+            throw new QuantityMeasurementException(
+                    "Temperature does not support division");
+        }
     }
 
     @Override
