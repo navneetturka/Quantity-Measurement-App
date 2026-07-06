@@ -3,6 +3,11 @@
 *.jar
 *.log
 
+# Environment files (if you ever create one manually)
+.env
+.env.local
+application-local.properties
+
 # Other File Exclusions
 .DS_Store
 *.iml

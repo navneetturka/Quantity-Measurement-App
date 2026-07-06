@@ -3,6 +3,7 @@ package com.apps.quantitymeasurement;
 import com.apps.quantitymeasurement.model.QuantityDTO;
 import com.apps.quantitymeasurement.model.QuantityInputDTO;
 import com.apps.quantitymeasurement.model.QuantityMeasurementDTO;
+import com.apps.quantitymeasurement.security.JwtService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,8 +25,19 @@ public class QuantityMeasurementApplicationTests {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private JwtService jwtService;
+
+    private String jwtToken;
+
     private String baseUrl() {
         return "http://localhost:" + port + "/api/v1/quantities";
+    }
+
+    @BeforeEach
+    void generateToken() {
+        jwtToken = jwtService.generateToken(
+                "test.user@gmail.com", "Test User", "http://pic.url");
     }
 
     private QuantityInputDTO input(
@@ -49,7 +61,14 @@ public class QuantityMeasurementApplicationTests {
     private HttpEntity<QuantityInputDTO> json(QuantityInputDTO body) {
         HttpHeaders h = new HttpHeaders();
         h.setContentType(MediaType.APPLICATION_JSON);
+        h.setBearerAuth(jwtToken);
         return new HttpEntity<>(body, h);
+    }
+
+    private HttpEntity<Void> authOnly() {
+        HttpHeaders h = new HttpHeaders();
+        h.setBearerAuth(jwtToken);
+        return new HttpEntity<>(h);
     }
 
     @Test @Order(1)
@@ -57,7 +76,6 @@ public class QuantityMeasurementApplicationTests {
     void contextLoads() {
         assertThat(restTemplate).isNotNull();
         assertThat(port).isGreaterThan(0);
-        System.out.println("Test server on port: " + port);
     }
 
     @Test @Order(2)
@@ -120,8 +138,7 @@ public class QuantityMeasurementApplicationTests {
         assertThat((Double) r.getBody().getResultValue()).isEqualTo(212.0);
     }
 
-    @Test
-    @Order(7)
+    @Test @Order(7)
     @DisplayName("POST /add - add 1 gallon and 3.785 litres ≈ 2 gallons")
     void testAdd_GallonAndLitres() {
         QuantityInputDTO body = input(
@@ -134,7 +151,6 @@ public class QuantityMeasurementApplicationTests {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
-        // Use offset for floating point comparison
         assertThat(response.getBody().getResultValue())
                 .isCloseTo(2.0, org.assertj.core.data.Offset.offset(0.01));
     }
@@ -195,8 +211,9 @@ public class QuantityMeasurementApplicationTests {
     @DisplayName("GET /history/operation/CONVERT - returns list not empty")
     @SuppressWarnings("unchecked")
     void testGetHistoryByOperation_Convert() {
-        var r = restTemplate.getForEntity(
-                baseUrl() + "/history/operation/CONVERT", List.class);
+        var r = restTemplate.exchange(
+                baseUrl() + "/history/operation/CONVERT", HttpMethod.GET,
+                authOnly(), List.class);
         assertThat(r.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(r.getBody()).isNotNull().isNotEmpty();
     }
@@ -205,8 +222,9 @@ public class QuantityMeasurementApplicationTests {
     @DisplayName("GET /history/type/TemperatureUnit - returns history not empty")
     @SuppressWarnings("unchecked")
     void testGetHistoryByType_Temperature() {
-        var r = restTemplate.getForEntity(
-                baseUrl() + "/history/type/TemperatureUnit", List.class);
+        var r = restTemplate.exchange(
+                baseUrl() + "/history/type/TemperatureUnit", HttpMethod.GET,
+                authOnly(), List.class);
         assertThat(r.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(r.getBody()).isNotNull().isNotEmpty();
     }
@@ -214,14 +232,14 @@ public class QuantityMeasurementApplicationTests {
     @Test @Order(14)
     @DisplayName("GET /count/DIVIDE - returns count > 0")
     void testGetOperationCount_Divide() {
-        var r = restTemplate.getForEntity(
-                baseUrl() + "/count/DIVIDE", Long.class);
+        var r = restTemplate.exchange(
+                baseUrl() + "/count/DIVIDE", HttpMethod.GET,
+                authOnly(), Long.class);
         assertThat(r.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(r.getBody()).isGreaterThan(0L);
     }
 
-    @Test
-    @Order(15)
+    @Test @Order(15)
     @DisplayName("POST /divide by zero → error, then /history/errored returns it")
     @SuppressWarnings("unchecked")
     void testDivide_ByZero_ErrorRecorded() {
@@ -233,13 +251,13 @@ public class QuantityMeasurementApplicationTests {
                 baseUrl() + "/divide", HttpMethod.POST,
                 json(body), String.class);
 
-        // Accept either 400 or 500 — both are valid error responses
         assertThat(response.getStatusCode().is4xxClientError()
                 || response.getStatusCode().is5xxServerError()).isTrue();
         assertThat(response.getBody()).containsIgnoringCase("zero");
 
-        ResponseEntity<List> errorHistoryResponse = restTemplate.getForEntity(
-                baseUrl() + "/history/errored", List.class);
+        ResponseEntity<List> errorHistoryResponse = restTemplate.exchange(
+                baseUrl() + "/history/errored", HttpMethod.GET,
+                authOnly(), List.class);
         assertThat(errorHistoryResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
@@ -248,7 +266,7 @@ public class QuantityMeasurementApplicationTests {
     void testCompare_InvalidUnit_Returns400() {
         var r = restTemplate.exchange(
                 baseUrl() + "/compare", HttpMethod.POST,
-                json(input(1.0,"FOOT","LengthUnit",   // invalid unit
+                json(input(1.0,"FOOT","LengthUnit",
                         12.0,"INCHES","LengthUnit")),
                 String.class);
         assertThat(r.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -261,12 +279,54 @@ public class QuantityMeasurementApplicationTests {
     void testCompare_InvalidType_Returns400() {
         var r = restTemplate.exchange(
                 baseUrl() + "/compare", HttpMethod.POST,
-                json(input(1.0,"FEET","Length",       // invalid type
+                json(input(1.0,"FEET","Length",
                         12.0,"INCHES","LengthUnit")),
                 String.class);
         assertThat(r.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(r.getBody()).contains(
                 "Measurement type must be one of: LengthUnit, VolumeUnit, " +
                         "WeightUnit, TemperatureUnit");
+    }
+
+    @Test @Order(18)
+    @DisplayName("UC18: POST /compare WITHOUT token → 401 Unauthorized")
+    void testCompare_NoToken_Returns401() {
+        HttpHeaders h = new HttpHeaders();
+        h.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<QuantityInputDTO> entity = new HttpEntity<>(
+                input(1.0,"FEET","LengthUnit",12.0,"INCHES","LengthUnit"), h);
+
+        var r = restTemplate.exchange(
+                baseUrl() + "/compare", HttpMethod.POST, entity, String.class);
+        assertThat(r.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test @Order(19)
+    @DisplayName("UC18: GET history WITH invalid/tampered token → 401 Unauthorized")
+    void testHistory_InvalidToken_Returns401() {
+        HttpHeaders h = new HttpHeaders();
+        h.setBearerAuth("this.is.not-a-valid-jwt");
+        HttpEntity<Void> entity = new HttpEntity<>(h);
+
+        var r = restTemplate.exchange(
+                baseUrl() + "/history/operation/COMPARE", HttpMethod.GET,
+                entity, String.class);
+        assertThat(r.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test @Order(20)
+    @DisplayName("UC18: GET /actuator/health is public → 200 without token")
+    void testActuatorHealth_PublicEndpoint_NoTokenNeeded() {
+        var r = restTemplate.getForEntity(
+                "http://localhost:" + port + "/actuator/health", String.class);
+        assertThat(r.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test @Order(21)
+    @DisplayName("UC18: GET /api/auth/login is public and redirects to Google")
+    void testAuthLogin_PublicEndpoint_Redirects() {
+        ResponseEntity<String> r = restTemplate.getForEntity(
+                "http://localhost:" + port + "/api/auth/login", String.class);
+        assertThat(r.getStatusCode()).isNotEqualTo(HttpStatus.UNAUTHORIZED);
     }
 }
