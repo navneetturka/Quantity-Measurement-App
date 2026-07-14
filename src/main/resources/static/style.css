@@ -1,0 +1,398 @@
+/* ===================== Design tokens ===================== */
+:root {
+  --blue-1: #5b6cf0;
+  --blue-2: #6d7cf5;
+  --indigo: #4f5fe8;
+  --teal: #16c2a3;
+  --teal-bg: #e9fbf7;
+  --ink: #1f2333;
+  --muted: #6b7280;
+  --line: #e6e8f0;
+  --bg: #eef1fb;
+  --card-bg: #f6f8fd;
+  --white: #ffffff;
+  --danger: #e5484d;
+  --danger-bg: #fdecec;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 20px 45px -20px rgba(60, 70, 150, 0.35);
+  font-size: 16px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.hidden { display: none !important; }
+
+/* ===================== Page shell ===================== */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 48px;
+}
+
+.app-card {
+  width: 100%;
+  max-width: 760px;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* ===================== Header ===================== */
+.app-header {
+  background: linear-gradient(120deg, var(--blue-1), var(--blue-2) 60%, #7b8bfb);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.app-header h1 {
+  margin: 0;
+  color: var(--white);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.auth-box { display: flex; align-items: center; }
+
+.btn-google {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-google:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,0.18); }
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+  padding: 4px 6px 4px 4px;
+}
+.user-chip img {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--white);
+  object-fit: cover;
+}
+.user-chip span {
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 600;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-logout {
+  border: none;
+  background: rgba(255,255,255,0.25);
+  color: var(--white);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+.btn-logout:hover { background: rgba(255,255,255,0.4); }
+
+/* ===================== Sign-in gate ===================== */
+.signin-gate {
+  margin: 28px 24px;
+  padding: 22px;
+  border: 1px dashed #c6cbe8;
+  border-radius: var(--radius-md);
+  background: var(--white);
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ===================== Body ===================== */
+.app-body { padding: 20px 24px 28px; }
+
+.field-group { margin-bottom: 18px; }
+
+.field-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+/* ===================== Type grid ===================== */
+.type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.type-card {
+  flex: 1 1 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 10px;
+  background: var(--white);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+.type-card:hover { transform: translateY(-1px); }
+.type-card.active {
+  border-color: var(--teal);
+  background: var(--teal-bg);
+}
+.type-icon { font-size: 1.4rem; }
+
+/* ===================== Action row ===================== */
+.action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  flex: 1 1 140px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.action-btn.active {
+  background: linear-gradient(120deg, var(--indigo), var(--blue-2));
+  border-color: transparent;
+  color: var(--white);
+}
+
+/* ===================== Forms ===================== */
+.form-row { margin-bottom: 18px; }
+
+.two-col {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.input-block {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-block label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.input-block input[type="number"] {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  padding: 12px 14px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--white);
+  width: 100%;
+}
+
+.input-block select {
+  border: 1px solid var(--line);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  background: var(--white);
+  width: 100%;
+}
+
+.input-block input:focus,
+.input-block select:focus {
+  outline: 2px solid var(--indigo);
+  outline-offset: -1px;
+}
+
+.input-block.invalid input {
+  border-color: var(--danger);
+  outline-color: var(--danger);
+}
+
+/* Conversion screen: "To" field shows only a unit dropdown (no value input) */
+.input-block.no-value select {
+  border-top: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.field-error {
+  margin: 0;
+  min-height: 14px;
+  font-size: 0.72rem;
+  color: var(--danger);
+}
+
+/* Arithmetic row with operator button in the middle */
+.arithmetic-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.arithmetic-row .input-block { flex: 1 1 220px; }
+
+.operator-btn {
+  width: 44px;
+  height: 44px;
+  margin-top: 22px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--indigo);
+  cursor: pointer;
+  align-self: center;
+}
+.operator-btn:hover { background: var(--teal-bg); border-color: var(--teal); }
+
+/* ===================== Result ===================== */
+.result-panel {
+  border-left: 4px solid var(--teal);
+  background: var(--white);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 14px rgba(30, 40, 90, 0.06);
+}
+.result-panel.is-error { border-left-color: var(--danger); background: var(--danger-bg); }
+
+.result-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.result-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--indigo);
+  word-break: break-word;
+}
+.result-panel.is-error .result-value { color: var(--danger); font-size: 1rem; font-weight: 600; }
+
+.result-unit {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  background: var(--white);
+}
+
+/* ===================== History (iframe host) ===================== */
+.history-section { margin-top: 8px; }
+
+.history-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.chev { transition: transform 0.15s ease; }
+.chev.open { transform: rotate(180deg); }
+
+.history-wrap {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--white);
+}
+
+#historyFrame {
+  width: 100%;
+  height: 360px;
+  border: 0;
+  display: block;
+}
+
+.hint-line {
+  margin-top: 14px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+  max-width: 760px;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 560px) {
+  :root { font-size: 15px; }
+  .app-header { padding: 16px; }
+  .app-header h1 { font-size: 1rem; }
+  .app-body { padding: 16px; }
+  .type-card { flex: 1 1 45%; }
+  .action-btn { flex: 1 1 100%; }
+  .two-col, .arithmetic-row { flex-direction: column; }
+  .operator-btn { align-self: center; margin-top: 0; }
+  .result-value { font-size: 1.3rem; }
+}
