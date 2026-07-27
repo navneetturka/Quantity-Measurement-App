@@ -207,6 +207,20 @@ public class QuantityMeasurementServiceImpl
                 repository.findByErrorTrue());
     }
 
+    @Override
+    public void deleteHistoryEntry(Long id) {
+        if (!repository.existsById(id)) {
+            throw new QuantityMeasurementException(
+                    "History record not found: " + id);
+        }
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void clearAllHistory() {
+        repository.deleteAll();
+    }
+
     // ── helpers ─────────────────────────────────────────
 
     private void saveError(

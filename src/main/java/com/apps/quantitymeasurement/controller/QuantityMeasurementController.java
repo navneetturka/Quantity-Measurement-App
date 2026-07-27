@@ -236,4 +236,20 @@ public class QuantityMeasurementController {
         logger.info("GET /history/errored");
         return ResponseEntity.ok(service.getErrorHistory());
     }
+
+    @DeleteMapping("/history/{id}")
+    @Operation(summary = "Delete a single history record")
+    public ResponseEntity<Void> deleteHistoryEntry(@PathVariable Long id) {
+        logger.info("DELETE /history/" + id);
+        service.deleteHistoryEntry(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/history")
+    @Operation(summary = "Clear all history records")
+    public ResponseEntity<Void> clearAllHistory() {
+        logger.info("DELETE /history (clear all)");
+        service.clearAllHistory();
+        return ResponseEntity.noContent().build();
+    }
 }

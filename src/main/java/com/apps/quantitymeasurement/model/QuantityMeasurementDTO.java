@@ -3,11 +3,15 @@ package com.apps.quantitymeasurement.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 public class QuantityMeasurementDTO {
+
+    public Long id;
+    public LocalDateTime createdAt;
 
     public double thisValue;
     public String thisUnit;
@@ -30,6 +34,8 @@ public class QuantityMeasurementDTO {
     public static QuantityMeasurementDTO from(QuantityMeasurementEntity entity) {
         if (entity == null) return null;
         QuantityMeasurementDTO dto = new QuantityMeasurementDTO();
+        dto.id                     = entity.getId();
+        dto.createdAt              = entity.getCreatedAt();
         dto.thisValue              = entity.getThisValue();
         dto.thisUnit               = entity.getThisUnit();
         dto.thisMeasurementType    = entity.getThisMeasurementType();
