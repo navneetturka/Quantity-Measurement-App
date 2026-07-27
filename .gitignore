@@ -27,7 +27,7 @@ application-local.properties
 *.iws
 *.ipr
 .vscode/
-
+*.db
 # OS
 .DS_Store
 Thumbs.db
