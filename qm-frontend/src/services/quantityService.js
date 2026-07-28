@@ -1,4 +1,4 @@
-import api from "./api";
+import { quantityApi as api } from "./api";
 
 const BASE = "/api/v1/quantities";
 

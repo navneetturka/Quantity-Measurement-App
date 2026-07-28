@@ -1,10 +1,10 @@
-import api, { API_BASE_URL, TOKEN_KEY, USER_KEY } from "./api";
+import { authApi, AUTH_BASE_URL, TOKEN_KEY, USER_KEY } from "./api";
 
-// Kicks off the existing backend flow: GET /api/auth/login redirects to
+// Kicks off the auth-service flow: GET /api/auth/login redirects to
 // /oauth2/authorization/google. This is a full browser navigation (not an
 // axios call) because OAuth2 login can't happen inside an XHR.
 export function startGoogleLogin() {
-  window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
+  window.location.href = `${AUTH_BASE_URL}/oauth2/authorization/google`;
 }
 
 export function saveSession({ token, name, email, picture }) {
@@ -29,6 +29,6 @@ export function clearSession() {
 // GET /api/auth/me — confirms the token is still valid and refreshes the
 // cached profile (name/email/picture come straight from the JWT claims).
 export async function fetchCurrentUser() {
-  const { data } = await api.get("/api/auth/me");
+  const { data } = await authApi.get("/api/auth/me");
   return data;
 }
